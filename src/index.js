@@ -1,8 +1,6 @@
-import { Ion, Viewer,Color,camera,VerticalOrigin, createWorldTerrain,createWorldImagery,PinBuilder, createOsmBuildings, Cartesian3, Math } from "cesium";
+import { Ion, Viewer,Color,camera,VerticalOrigin, PinBuilder, Cartesian3 } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import Cesium3DTile from "cesium/Source/Scene/Cesium3DTile";
 import "../src/css/main.css"
-require('dotenv').config();
 const {
   getLongitude
 } = require("./address");
@@ -12,6 +10,7 @@ Ion.defaultAccessToken = '<ACCESS_TOKEN>';
 let ResisterButton = document.getElementById('ResisterButton');
 ResisterButton.addEventListener('click', butotnClick);
 
+// 住所が入力されたときの挙動
 function butotnClick(){
   const AdressText = document.getElementById('AdressText').value;
   getLongitude(AdressText)
@@ -21,13 +20,15 @@ function butotnClick(){
   })
 };
 
+// Cesiumで地球儀表示
 const viewer = new Viewer("cesiumContainer", {
   timeline: false
 });
 
-viewer.scene.primitives.add(createOsmBuildings());
+// ピンを立てるためのオブジェクト生成
 const pinBuilder = new PinBuilder();
 
+// ピンを立てる
 function pinSet(longitude, latitude)
 {
   const bluePin = viewer.entities.add({
@@ -39,9 +40,8 @@ function pinSet(longitude, latitude)
     },
   });
 
+  // 視点移動
   viewer.camera.flyTo({   
     destination : Cartesian3.fromDegrees(longitude, latitude, 450000)
   });
 }
-
-

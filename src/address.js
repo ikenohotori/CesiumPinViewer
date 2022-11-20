@@ -1,8 +1,10 @@
+// 住所から経度・緯度を取得
 function getLongitude(AdressText) {
     return new Promise((resolve,reject) =>{
         try
         {
             const uri = 'https://msearch.gsi.go.jp/address-search/AddressSearch?q=' + AdressText;
+            // URLエンコード
             const encodedurl = encodeURI(uri);
             fetch(encodedurl)
             .then(response => response.json())
